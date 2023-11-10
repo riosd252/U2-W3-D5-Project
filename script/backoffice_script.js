@@ -59,18 +59,46 @@ const editPage = () => {
   })
     .then((resp) => resp.json())
     .then((productObj) => {
-      const nameInput = document.getElementById("product-name");
-      const descriptionInput = document.getElementById("product-description");
-      const brandInput = document.getElementById("product-brand");
-      const imgInput = document.getElementById("img-url");
-      const priceInput = document.getElementById("product-price");
+      const name = document.getElementById("product-name");
+      const description = document.getElementById("product-description");
+      const brand = document.getElementById("product-brand");
+      const img = document.getElementById("img-url");
+      const price = document.getElementById("product-price");
 
-      nameInput.value = productObj.name;
-      descriptionInput.value = productObj.description;
-      brandInput.value = productObj.brand;
-      imgInput.value = productObj.imageUrl;
-      priceInput.value = productObj.price;
+      name.value = productObj.name;
+      description.value = productObj.description;
+      brand.value = productObj.brand;
+      img.value = productObj.imageUrl;
+      price.value = productObj.price;
+    })
+    .catch((err) => console.log(err));
+};
 
-      console.log(nameInput.value);
-    });
+const putBtn = document.getElementById("put-btn");
+
+putBtn.onclick = () => {
+  const name = document.getElementById("product-name");
+  const description = document.getElementById("product-description");
+  const brand = document.getElementById("product-brand");
+  const img = document.getElementById("img-url");
+  const price = document.getElementById("product-price");
+
+  const modProduct = {
+    name: name.value,
+    description: description.value,
+    brand: brand.value,
+    img: img.value,
+    price: price.value,
+  };
+
+  fetch(mainEndpoint + productId, {
+    method: "PUT",
+    headers: {
+      Authorization: authKey,
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(modProduct),
+  })
+    .then((resp) => console.log(resp))
+    .catch((err) => console.log(err));
 };
