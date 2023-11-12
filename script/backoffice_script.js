@@ -118,7 +118,7 @@ putBtn.onclick = () => {
 
 removeBtn.onclick = () => {
   if (
-    window.confirm("Are you sure to proceed? This operation is not reversible.")
+    window.confirm("Are you sure to proceed? This operation is irreversible.")
   ) {
     fetch(mainEndpoint + productId, {
       method: "DELETE",

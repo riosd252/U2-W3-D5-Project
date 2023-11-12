@@ -18,6 +18,8 @@ window.onload = () => {
         const productId = productObj._id;
 
         cardCreation(imageUrl, name, description, price, productId);
+        const spinner = document.getElementById("spinner");
+        spinner.classList.add("d-none");
       });
     });
 };
@@ -25,15 +27,15 @@ window.onload = () => {
 const cardCreation = (imageUrl, name, description, price, productId) => {
   const row = document.getElementById("main-row");
   const col = document.createElement("div");
-  col.className = "col-3";
+  col.className = "col-12 col-sm-6 col-md-4 col-lg-3";
   const card = document.createElement("div");
-  card.className = "card shadow";
+  card.className = "card h-100 shadow";
   const cardImg = document.createElement("img");
   cardImg.className = "card-img-top";
   cardImg.src = imageUrl;
   cardImg.alt = name + "image";
   const cardBody = document.createElement("div");
-  cardBody.className = "card-body";
+  cardBody.className = "card-body d-flex flex-column";
   const cardTitle = document.createElement("h5");
   cardTitle.className = "card-title";
   cardTitle.innerText = name;
@@ -41,7 +43,8 @@ const cardCreation = (imageUrl, name, description, price, productId) => {
   cardText.className = "card-text";
   cardText.innerText = description;
   const cardFooter = document.createElement("div");
-  cardFooter.className = "d-flex justify-content-between align-items-center";
+  cardFooter.className =
+    "mt-auto d-flex justify-content-between align-items-center flex-sm-column flex-lg-row";
   const cardPrice = document.createElement("span");
   cardPrice.className = "fw-bold";
   cardPrice.innerText = price + "€";
@@ -51,6 +54,9 @@ const cardCreation = (imageUrl, name, description, price, productId) => {
   const detailsBtn = document.createElement("button");
   detailsBtn.className = "btn btn-primary py-1 px-2";
   detailsBtn.innerText = "Show more";
+  detailsBtn.addEventListener("click", () => {
+    window.location.assign("./product.html?prId=" + productId);
+  });
   const modifyBtn = document.createElement("button");
   modifyBtn.className = "btn btn-success py-1 px-2 modify";
   modifyBtn.innerText = "Edit Item";
