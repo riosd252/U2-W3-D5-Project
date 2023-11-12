@@ -39,16 +39,24 @@ const postPage = () => {
       },
       body: JSON.stringify(Product),
     })
-      .then((resp) => console.log(resp))
-      .catch((err) => console.log(err));
+      .then((resp) => {
+        window.alert("New item created successfully!");
+        form.reset();
+      })
+      .catch((err) => window.alert(err));
   };
 };
 
+const postBtn = document.getElementById("post-btn");
+const putBtn = document.getElementById("put-btn");
+const removeBtn = document.getElementById("remove-btn");
+const resetBtn = document.getElementById("reset-btn");
+
 const editPage = () => {
-  const postBtn = document.getElementById("post-btn");
   postBtn.classList.add("d-none");
-  const putBtn = document.getElementById("put-btn");
+  resetBtn.classList.add("d-none");
   putBtn.classList.remove("d-none");
+  removeBtn.classList.remove("d-none");
   const h3 = document.getElementById("backoffice-h3");
   h3.innerText = "Edit product details";
 
@@ -71,10 +79,10 @@ const editPage = () => {
       img.value = productObj.imageUrl;
       price.value = productObj.price;
     })
-    .catch((err) => console.log(err));
+    .catch((err) =>
+      window.alert("An error has occurred. Please consult your developer.")
+    );
 };
-
-const putBtn = document.getElementById("put-btn");
 
 putBtn.onclick = () => {
   const name = document.getElementById("product-name");
@@ -99,6 +107,37 @@ putBtn.onclick = () => {
     },
     body: JSON.stringify(modProduct),
   })
-    .then((resp) => console.log(resp))
-    .catch((err) => console.log(err));
+    .then((resp) => {
+      window.alert("Item successfully modified!");
+      window.location.assign("./index.html");
+    })
+    .catch((err) =>
+      window.alert("An error has occurred. Please consult your developer.")
+    );
+};
+
+removeBtn.onclick = () => {
+  if (
+    window.confirm("Are you sure to proceed? This operation is not reversible.")
+  ) {
+    fetch(mainEndpoint + productId, {
+      method: "DELETE",
+      headers: {
+        Authorization: authKey,
+      },
+    })
+      .then((resp) => {
+        window.alert("Item deleted.");
+        window.location.assign("./backoffice.html");
+      })
+      .catch((err) =>
+        window.alert("An error has occurred. Please consult your developer.")
+      );
+  }
+};
+
+resetBtn.onclick = () => {
+  if (window.confirm("Are you sure to proceed?")) {
+    form.reset();
+  }
 };
